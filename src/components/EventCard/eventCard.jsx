@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./eventCardStyles.css";
-// import viewMore from "../../assets/view more.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
@@ -10,6 +9,7 @@ const EventCard = (props) => {
     <div className="card-container">
       <div
         className={`card ${expand ? "card-expand1" : ""} ${
+          // card-expand1 -> scale(1.3) and card-expand2 -> scale(2.6)
           expand === 2 ? "card-expand2" : ""
         }`}
         style={{
@@ -53,11 +53,6 @@ const EventCard = (props) => {
             setExpand(2);
           }}
         >
-          {/* <img
-            src={`${expand ? viewMore : ""}`}
-            alt=""
-            style={{ width: "150px" }}
-          /> */}
           <span>View More</span>
         </div>
         <div className={`${expand === 2 ? "contents" : "content-inactive"}`}>

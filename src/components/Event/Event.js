@@ -10,9 +10,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import events from "../../data/events";
+import events from "../../data/events"; // data of all events
 
 const SamplePrevArrow = (props) => {
+  // custom prev arrow for slider
   const { className, onClick } = props;
   return (
     <div className={className} onClick={onClick}>
@@ -26,6 +27,7 @@ const SamplePrevArrow = (props) => {
 };
 
 const SampleNextArrow = (props) => {
+  // custom next arrow for slider
   const { className, onClick } = props;
   return (
     <div className={className} onClick={onClick}>
@@ -102,7 +104,7 @@ const Event = () => {
   };
   const [active, setActive] = useState(false); // state for handling grid-flexbox view
   const [activeIndex, setActiveIndex] = useState(-1); // state for getting the index of the active event when clicked
-  let gridEvent = 0;
+  let gridEvent = 0; // variable to store the active event
   let n = events.length;
   return (
     <div className="main">
@@ -110,8 +112,9 @@ const Event = () => {
         <div className={` ${active === 2 ? "events-max" : "events"}`}></div>
         <div className="dance-bg"></div>
         <div
-          className={` ${active === 2 ? "event_content-inactive" : "event_content"
-            }`}
+          className={` ${
+            active === 2 ? "event_content-inactive" : "event_content"
+          }`}
         >
           POSUA, the spring fest of NIT Silchar, spreads out exuberance all
           around with the arrival of spring rejuvenating the land. This ecstatic
@@ -138,6 +141,7 @@ const Event = () => {
         </div>
       </div>
       <div className={active ? "main-section-large" : "main-section"}>
+        {/* carousel  */}
         <div className={active ? "carousel-inactive" : "carousel"}>
           <Slider {...settings}>
             {events.map((event, index) => (
@@ -160,48 +164,28 @@ const Event = () => {
             ))}
           </Slider>
         </div>
+
+        {/* grid */}
         <div className={active ? "grid" : "grid-inactive"}>
           {events.forEach((eventI, index) => {
             if (activeIndex === index + 1) {
               gridEvent = eventI;
             }
           })}
+
+          {/* prev card to active card */}
           <div className={` ${active === 2 ? "item-inactive" : "item"}`}>
             <EventCard
               expand={false}
-              name1={
-                events[
-                  activeIndex === 1 || activeIndex <= 0
-                    ? n - 1
-                    : activeIndex - 2
-                ].name1
-              }
-              name2={
-                events[
-                  activeIndex === 1 || activeIndex <= 0
-                    ? n - 1
-                    : activeIndex - 2
-                ].name2
-              }
-              bgImg={
-                events[
-                  activeIndex === 1 || activeIndex <= 0
-                    ? n - 1
-                    : activeIndex - 2
-                ].bgImg
-              }
-              content={
-                events[
-                  activeIndex === 1 || activeIndex <= 0
-                    ? n - 1
-                    : activeIndex - 2
-                ].content
-              }
-              key={
-                activeIndex === 1 || activeIndex <= 0 ? n - 1 : activeIndex - 2
-              }
+              name1={events[(activeIndex - 2 + n) % n].name1}
+              name2={events[(activeIndex - 2 + n) % n].name2}
+              bgImg={events[(activeIndex - 2 + n) % n].bgImg}
+              content={events[(activeIndex - 2 + n) % n].content}
+              key={(activeIndex - 2 + n) % n}
             />
           </div>
+
+          {/* active card */}
           <div className="item">
             <EventCard
               expand={true}
@@ -214,54 +198,27 @@ const Event = () => {
             />
           </div>
 
+          {/* next card to active card */}
           <div className={` ${active === 2 ? "item-inactive" : "item"}`}>
             <EventCard
               expand={false}
-              name1={
-                events[activeIndex === n || activeIndex <= 0 ? 0 : activeIndex]
-                  .name1
-              }
-              name2={
-                events[activeIndex === n || activeIndex <= 0 ? 0 : activeIndex]
-                  .name2
-              }
-              bgImg={
-                events[activeIndex === n || activeIndex <= 0 ? 0 : activeIndex]
-                  .bgImg
-              }
-              content={
-                events[activeIndex === n || activeIndex <= 0 ? 0 : activeIndex]
-                  .content
-              }
-              key={activeIndex === n || activeIndex <= 0 ? 0 : activeIndex}
+              name1={events[(activeIndex + n) % n].name1}
+              name2={events[(activeIndex + n) % n].name2}
+              bgImg={events[(activeIndex + n) % n].bgImg}
+              content={events[(activeIndex + n) % n].content}
+              key={(activeIndex + n) % n}
             />
           </div>
+
+          {/* next to next card of active card */}
           <div className={` ${active === 2 ? "item-inactive" : "item"}`}>
             <EventCard
               expand={false}
-              name1={
-                events[
-                  activeIndex >= n - 1 || activeIndex <= 0 ? 0 : activeIndex + 1
-                ].name1
-              }
-              name2={
-                events[
-                  activeIndex >= n - 1 || activeIndex <= 0 ? 0 : activeIndex + 1
-                ].name2
-              }
-              bgImg={
-                events[
-                  activeIndex >= n - 1 || activeIndex <= 0 ? 0 : activeIndex + 1
-                ].bgImg
-              }
-              content={
-                events[
-                  activeIndex >= n - 1 || activeIndex <= 0 ? 0 : activeIndex + 1
-                ].content
-              }
-              key={
-                activeIndex === n - 1 || activeIndex <= 0 ? 0 : activeIndex + 1
-              }
+              name1={events[(activeIndex + 1) % n].name1}
+              name2={events[(activeIndex + 1) % n].name2}
+              bgImg={events[(activeIndex + 1) % n].bgImg}
+              content={events[(activeIndex + 1) % n].content}
+              key={(activeIndex + 1) % n}
             />
           </div>
         </div>
